@@ -32,7 +32,7 @@ class ProductTile extends StatelessWidget {
         vertical: 15,
         horizontal: 40,
       ),
-      color: const Color(0xfff8f8f8),
+      color: const Color(0xFFFAF7F7),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

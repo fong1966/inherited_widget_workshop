@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inherited_widget_workshop/appstatewidget.dart';
 
 import 'shopping_cart.dart';
 import 'data.dart';
@@ -6,17 +7,14 @@ import 'data.dart';
 import 'product_list.dart';
 import 'service.dart';
 
-final GlobalKey<ShoppingCartIconState> shoppingCart =
-    GlobalKey<ShoppingCartIconState>();
-final GlobalKey<ProductListWidgetState> productList =
-    GlobalKey<ProductListWidgetState>();
-
 void main() {
   runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Store',
-      home: MyStorePage(),
+    const AppStateWidget(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Store',
+        home: MyStorePage(),
+      ),
     ),
   );
 }
@@ -38,15 +36,15 @@ class MyStorePageState extends State<MyStorePage> {
       _inSearch = !_inSearch;
     });
 
+    AppStateWidget.of(context).setProductList(Server.getProductList());
     _controller.clear();
-    productList.currentState!.productList = Server.getProductList();
   }
 
   void _handleSearch() {
     _focusNode.unfocus();
     final String filter = _controller.text;
-    productList.currentState!.productList =
-        Server.getProductList(filter: filter);
+    AppStateWidget.of(context)
+        .setProductList(Server.getProductList(filter: filter));
   }
 
   @override
@@ -82,13 +80,13 @@ class MyStorePageState extends State<MyStorePage> {
                   onPressed: _toggleSearch,
                   icon: const Icon(Icons.search, color: Colors.black),
                 ),
-              ShoppingCartIcon(key: shoppingCart),
+              const ShoppingCartIcon(),
             ],
             backgroundColor: Colors.white,
             pinned: true,
           ),
-          SliverToBoxAdapter(
-            child: ProductListWidget(key: productList),
+          const SliverToBoxAdapter(
+            child: ProductListWidget(),
           ),
         ],
       ),
