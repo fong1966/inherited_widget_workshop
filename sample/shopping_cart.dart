@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inherited_widget_workshop/appstate.dart';
+import 'appstate.dart';
 
 class ShoppingCartIcon extends StatelessWidget {
   const ShoppingCartIcon({super.key});

@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
+import 'appstatewidget.dart';
 
+import 'shopping_cart.dart';
 import 'data.dart';
-import 'product_list_widget.dart';
-// import 'server.dart';
-import 'shopping_cart_icon.dart';
 
-// final GlobalKey<ShoppingCartIconState> shoppingCartIconStateKey =
-//     GlobalKey<ShoppingCartIconState>();
-// final GlobalKey<ProductListWidgetState> productListWidgetStateKey =
-//     GlobalKey<ProductListWidgetState>();
+import 'product_list.dart';
+import 'server.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Store',
-      home: MyStorePage(),
+    const AppStateWidget(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Store',
+        home: MyStorePage(),
+      ),
     ),
   );
 }
@@ -28,7 +27,6 @@ class MyStorePage extends StatefulWidget {
 }
 
 class MyStorePageState extends State<MyStorePage> {
-  // used by search button & textfield
   bool _inSearch = false;
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
@@ -38,16 +36,15 @@ class MyStorePageState extends State<MyStorePage> {
       _inSearch = !_inSearch;
     });
 
+    AppStateWidget.of(context).setProductList(Server.getProductList());
     _controller.clear();
-    // productListWidgetStateKey.currentState!.productList =
-    //     Server.getProductList();
   }
 
   void _handleSearch() {
     _focusNode.unfocus();
-    // final String filter = _controller.text;
-    // productListWidgetStateKey.currentState!.productList =
-    //     Server.getProductList(filter: filter);
+    final String filter = _controller.text;
+    AppStateWidget.of(context)
+        .setProductList(Server.getProductList(filter: filter));
   }
 
   @override
@@ -84,15 +81,12 @@ class MyStorePageState extends State<MyStorePage> {
                   icon: const Icon(Icons.search, color: Colors.black),
                 ),
               const ShoppingCartIcon(),
-              // ShoppingCartIcon(key: shoppingCartIconStateKey),
             ],
             backgroundColor: Colors.white,
             pinned: true,
           ),
           const SliverToBoxAdapter(
-            // SliverToBoxAdapter(
             child: ProductListWidget(),
-            // child: ProductListWidget(key: productListWidgetStateKey),
           ),
         ],
       ),

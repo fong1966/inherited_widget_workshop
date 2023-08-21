@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'product_model.dart';
+import 'model.dart';
 
 const String baseAssetURL =
     'https://dartpad-workshops-io2021.web.app/inherited_widget/assets';

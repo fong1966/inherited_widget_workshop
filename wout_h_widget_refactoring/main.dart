@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'data.dart';
 import 'product_list_widget.dart';
-// import 'server.dart';
+import 'server.dart';
 import 'shopping_cart_icon.dart';
 
-// final GlobalKey<ShoppingCartIconState> shoppingCartIconStateKey =
-//     GlobalKey<ShoppingCartIconState>();
-// final GlobalKey<ProductListWidgetState> productListWidgetStateKey =
-//     GlobalKey<ProductListWidgetState>();
+final GlobalKey<ShoppingCartIconState> shoppingCart =
+    GlobalKey<ShoppingCartIconState>();
+final GlobalKey<ProductListWidgetState> productList =
+    GlobalKey<ProductListWidgetState>();
 
 void main() {
   runApp(
@@ -28,7 +28,6 @@ class MyStorePage extends StatefulWidget {
 }
 
 class MyStorePageState extends State<MyStorePage> {
-  // used by search button & textfield
   bool _inSearch = false;
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
@@ -39,15 +38,14 @@ class MyStorePageState extends State<MyStorePage> {
     });
 
     _controller.clear();
-    // productListWidgetStateKey.currentState!.productList =
-    //     Server.getProductList();
+    productList.currentState!.productList = Server.getProductList();
   }
 
   void _handleSearch() {
     _focusNode.unfocus();
-    // final String filter = _controller.text;
-    // productListWidgetStateKey.currentState!.productList =
-    //     Server.getProductList(filter: filter);
+    final String filter = _controller.text;
+    productList.currentState!.productList =
+        Server.getProductList(filter: filter);
   }
 
   @override
@@ -83,16 +81,13 @@ class MyStorePageState extends State<MyStorePage> {
                   onPressed: _toggleSearch,
                   icon: const Icon(Icons.search, color: Colors.black),
                 ),
-              const ShoppingCartIcon(),
-              // ShoppingCartIcon(key: shoppingCartIconStateKey),
+              ShoppingCartIcon(key: shoppingCart),
             ],
             backgroundColor: Colors.white,
             pinned: true,
           ),
-          const SliverToBoxAdapter(
-            // SliverToBoxAdapter(
-            child: ProductListWidget(),
-            // child: ProductListWidget(key: productListWidgetStateKey),
+          SliverToBoxAdapter(
+            child: ProductListWidget(key: productList),
           ),
         ],
       ),

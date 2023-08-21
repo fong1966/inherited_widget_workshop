@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'appstate.dart';
-import 'service.dart';
+import 'server.dart';
 
 class AppStateWidget extends StatefulWidget {
   const AppStateWidget({required this.child, Key? key}) : super(key: key);

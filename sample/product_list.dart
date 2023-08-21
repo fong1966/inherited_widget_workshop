@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'appstate.dart';
 import 'appstatewidget.dart';
 import 'product_tile.dart';
-import 'service.dart';
+import 'server.dart';
 
 class ProductListWidget extends StatelessWidget {
   const ProductListWidget({Key? key}) : super(key: key);
